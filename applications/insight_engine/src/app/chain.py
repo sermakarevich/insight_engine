@@ -68,7 +68,6 @@ Follow Up Input: {question}
 Standalone Question:"""
 
 VECTORDB_PATH = "/chroma/trinosql"
-# VECTORDB_PATH = "../../chroma/trinosql"
 
 app = FastAPI()
 app.add_middleware(
