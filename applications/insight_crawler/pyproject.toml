@@ -1,0 +1,18 @@
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I"] # Include 'I' for import-related rules
+ignore = []
+
+[tool.ruff.lint.isort]
+known-local-folder = ["app"]
+
+
+[tool.mypy]
+ignore_missing_imports = true
+strict = true
+files = "src/app"
+exclude = "venv|site-packages"
+disallow_untyped_calls = false
+disable_error_code = ["no-any-return"]
