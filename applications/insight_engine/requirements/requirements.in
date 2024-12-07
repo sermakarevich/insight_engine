@@ -1,4 +1,6 @@
-langchain
+fastapi
+langserve==0.0.39
+langchain_core
 langchain_openai
-langchain_community
-ruff
+langchain_chroma
+uvicorn

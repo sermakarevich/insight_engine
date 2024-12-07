@@ -1,4 +1,4 @@
-SERVICE=insight_crawler
+SERVICE=insight-crawler
 
 build:
 	docker-compose --log-level ERROR -f ../docker-compose.yaml build ${SERVICE}

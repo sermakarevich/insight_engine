@@ -9,6 +9,7 @@ logger = logging.getLogger(__name__)
 
 PLUGINS = "crawlers"
 
+
 def get_argparser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Core parser")
     parser.add_argument("--plugin", type=str, help="Plugin to execute")

@@ -2,14 +2,13 @@ import logging
 import re
 from typing import Generator
 
-from bs4 import BeautifulSoup, SoupStrainer, Doctype, NavigableString, Tag
-
-from langchain_community.document_loaders import RecursiveUrlLoader, SitemapLoader
+from bs4 import BeautifulSoup, Doctype, NavigableString, SoupStrainer, Tag
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.utils.html import PREFIXES_TO_IGNORE_REGEX, SUFFIXES_TO_IGNORE_REGEX
+from langchain_chroma import Chroma
+from langchain_community.document_loaders import RecursiveUrlLoader, SitemapLoader
 from langchain_core.embeddings import Embeddings
 from langchain_openai import OpenAIEmbeddings
-from langchain_chroma import Chroma
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +21,7 @@ RECURSIVE_LOADER_DATA = [
     {
         "url": "https://trino.io/download",
         "max_depth": 2,
-    }
+    },
 ]
 SITEMAP_LOADER_URLS = []
 
@@ -72,9 +71,7 @@ def docs_extractor(soup: BeautifulSoup) -> str:
 
                         lines: list[str] = []
                         for span in child.find_all("span", class_="token-line"):
-                            line_content = "".join(
-                                token.get_text() for token in span.find_all("span")
-                            )
+                            line_content = "".join(token.get_text() for token in span.find_all("span"))
                             lines.append(line_content)
 
                         code_content = "\n".join(lines)
@@ -95,9 +92,7 @@ def docs_extractor(soup: BeautifulSoup) -> str:
                         yield f"{i + 1}. "
                         yield from get_text(li)
                         yield "\n\n"
-                elif child.name == "div" and "tabs-container" in child.attrs.get(
-                    "class", [""]
-                ):
+                elif child.name == "div" and "tabs-container" in child.attrs.get("class", [""]):
                     tabs = child.find_all("li", {"role": "tab"})
                     tab_panels = child.find_all("div", {"role": "tabpanel"})
                     for tab, tab_panel in zip(tabs, tab_panels):
@@ -122,9 +117,7 @@ def docs_extractor(soup: BeautifulSoup) -> str:
                     if tbody_exists:
                         for row in tbody.find_all("tr"):
                             yield "| "
-                            yield " | ".join(
-                                cell.get_text(strip=True) for cell in row.find_all("td")
-                            )
+                            yield " | ".join(cell.get_text(strip=True) for cell in row.find_all("td"))
                             yield " |\n"
 
                     yield "\n\n"
@@ -156,9 +149,7 @@ def sitemap_load(url):
         parsing_function=docs_extractor,
         default_parser="lxml",
         bs_kwargs={
-            "parse_only": SoupStrainer(
-                name=("article", "title", "html", "lang", "content")
-            ),
+            "parse_only": SoupStrainer(name=("article", "title", "html", "lang", "content")),
         },
         meta_function=metadata_extractor,
     ).load()
@@ -170,15 +161,14 @@ def simple_extractor(html: str) -> str:
 
 
 def recursive_load(inp):
-    return RecursiveUrlLoader(        
+    return RecursiveUrlLoader(
         extractor=simple_extractor,
         prevent_outside=True,
         use_async=False,
         timeout=600,
         # Drop trailing / to avoid duplicate pages.
         link_regex=(
-            f"href=[\"']{PREFIXES_TO_IGNORE_REGEX}((?:{SUFFIXES_TO_IGNORE_REGEX}.)*?)"
-            r"(?:[\#'\"]|\/[\#'\"])"
+            f"href=[\"']{PREFIXES_TO_IGNORE_REGEX}((?:{SUFFIXES_TO_IGNORE_REGEX}.)*?)" r"(?:[\#'\"]|\/[\#'\"])"
         ),
         check_response_status=True,
         **inp,
