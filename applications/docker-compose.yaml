@@ -11,6 +11,7 @@ services:
     volumes:
       - ./insight_engine/src:/src
       - ./insight_engine/requirements:/requirements
+      - /tmp/chroma:/chroma
 
   ######################### insight-crawler #########################
   insight_crawler:
@@ -20,6 +21,9 @@ services:
       dockerfile: ./applications/insight_crawler/Dockerfile
     env_file:
       - ./insight_crawler/docker-compose.env
+    ports:
+      - "8080:8080"
     volumes:
       - ./insight_crawler/src:/src
       - ./insight_crawler/requirements:/requirements
+       - /tmp/chroma:/chroma
