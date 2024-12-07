@@ -7,7 +7,7 @@ run:
 format:
 	docker-compose --log-level ERROR run --rm ${SERVICE} sh -c "ruff check --fix && ruff format /src"
 serve:
-	docker-compose --log-level ERROR -f ../docker-compose.yaml run -p 8080:8080 --rm ${SERVICE} uvicorn --app-dir=app main:app --reload --port 8080
+	docker-compose --log-level ERROR -f ../docker-compose.yaml run -p 8080:8080  --rm ${SERVICE} uvicorn backend.main:app --reload --port 8080 --host 0.0.0.0
 test:
 	docker-compose --log-level ERROR run --rm ${SERVICE} sh -c "cd / && pytest -s -v /src -W ignore::pytest.PytestCollectionWarning && mypy /src"
 regenerate-requirements:

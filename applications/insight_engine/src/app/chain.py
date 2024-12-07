@@ -12,7 +12,8 @@ from langchain_core.prompts import (
     MessagesPlaceholder,
     PromptTemplate,
 )
-from langchain_core.pydantic_v1 import BaseModel
+from pydantic import BaseModel
+# from langchain_core.pydantic_v1 import BaseModel
 from langchain_core.retrievers import BaseRetriever
 from langchain_core.runnables import (
     Runnable,
@@ -67,6 +68,7 @@ Follow Up Input: {question}
 Standalone Question:"""
 
 VECTORDB_PATH = "/chroma/trinosql"
+# VECTORDB_PATH = "../../chroma/trinosql"
 
 app = FastAPI()
 app.add_middleware(

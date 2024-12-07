@@ -1,6 +1,8 @@
 fastapi
-langserve==0.0.39
-langchain_core
-langchain_openai
-langchain_chroma
+httpx==0.27.2
+langserve>=0.3.0
+langchain-core
+langchain-openai
+langchain-chroma
+sse_starlette
 uvicorn
