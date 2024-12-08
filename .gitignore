@@ -1,4 +1,4 @@
 .DS_Store
-chroma/
+db/
 .pyc
 __pycache__

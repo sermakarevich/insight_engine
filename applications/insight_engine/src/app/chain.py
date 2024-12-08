@@ -12,8 +12,8 @@ from langchain_core.prompts import (
     MessagesPlaceholder,
     PromptTemplate,
 )
-from pydantic import BaseModel
-# from langchain_core.pydantic_v1 import BaseModel
+# from pydantic import BaseModel
+from langchain_core.pydantic_v1 import BaseModel
 from langchain_core.retrievers import BaseRetriever
 from langchain_core.runnables import (
     Runnable,
@@ -29,7 +29,7 @@ RESPONSE_TEMPLATE = """\
 You are an expert programmer and problem-solver, tasked with answering any question \
 about Polars.
 
-Generate a comprehensive and informative answer of 800 words or less for the \
+Generate a comprehensive and informative answer of 1500 words or less for the \
 given question based solely on the provided search results (URL and content). You must \
 only use information from the provided search results. Use an unbiased and \
 journalistic tone. Combine search results together into a coherent answer. Do not \
@@ -67,17 +67,7 @@ Chat History:
 Follow Up Input: {question}
 Standalone Question:"""
 
-VECTORDB_PATH = "/chroma/trinosql"
-
-app = FastAPI()
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-    expose_headers=["*"],
-)
+VECTORDB_PATH = "/db/chroma/trinosql"
 
 
 def get_embeddings_model() -> Embeddings:

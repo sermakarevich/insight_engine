@@ -12,7 +12,7 @@ from langchain_openai import OpenAIEmbeddings
 
 logger = logging.getLogger(__name__)
 
-VECTORDB_PATH = "/chroma/trinosql"
+VECTORDB_PATH = "/db/chroma/trinosql"
 RECURSIVE_LOADER_DATA = [
     {
         "url": "https://trino.io/docs/current/",

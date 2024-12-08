@@ -13,7 +13,7 @@ services:
     volumes:
       - ./insight_engine/src:/src
       - ./insight_engine/requirements:/requirements
-      - ./chroma:/chroma
+      - ./db:/db
 
   ######################### insight-crawler #########################
   insight-crawler:
@@ -26,4 +26,4 @@ services:
     volumes:
       - ./insight_crawler/src:/src
       - ./insight_crawler/requirements:/requirements
-      - ./chroma:/chroma
+      - ./db:/db
